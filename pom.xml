@@ -33,7 +33,7 @@
                     <!-- Use your own application name -->
                     <appName>spark-heroku-example</appName>
                     <processTypes>
-                        <web>java -jar ./target/Sparkki-1.0-jar-with-dependencies.jar</web>
+                        <web>java -jar ./target/Sparkki-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
