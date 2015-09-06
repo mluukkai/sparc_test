@@ -31,7 +31,7 @@
                 <configuration>
                     <jdkVersion>1.8</jdkVersion>
                     <!-- Use your own application name -->
-                    <appName>spark-heroku-example</appName>
+                    <appName>spark-testi</appName>
                     <processTypes>
                         <web>java -jar ./target/Sparkki-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
                     </processTypes>
