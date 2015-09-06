@@ -1,12 +1,13 @@
 language: java
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 before_install:
-  - git clone https://github.com/hy-ohtu/PaivanUutiset
-  - mvn clean install -U -Dmaven.test.skip=true -f PaivanUutiset/pom.xml
-  - git clone https://github.com/hy-ohtu/HackerNewsUutiset.git
-  - mvn clean install -U -Dmaven.test.skip=true -f HackerNewsUutiset/pom.xml
-
+- git clone https://github.com/hy-ohtu/PaivanUutiset
+- mvn clean install -U -Dmaven.test.skip=true -f PaivanUutiset/pom.xml
+- git clone https://github.com/hy-ohtu/HackerNewsUutiset.git
+- mvn clean install -U -Dmaven.test.skip=true -f HackerNewsUutiset/pom.xml
 after_success:
-  - mvn heroku:deploy
+- mvn heroku:deploy
+env:
+  global:
+    secure: IG5pebsX5VQAiOrn3MMzBmzBKV9qOC2F+eddlE02WuBx+xrOkZqoCl333YrNt3Vmbq4JYWlI1sxgMpOw7OaOnlihy3t5P4UsFTGVBbFj+eTH3Yf9nHuohui+IH36njyaygFMVZq5vQDB446rZwbo3hjpnSXoJkWuf5Lbok273tGSSGcCwzDvZnLALbjcX7IyJGzuQH3DyrjtMeh7D90zl+6+YGIicfju+Q3ht3jfvN0xtPuLO5jkfCsU7BXmfN7zcAPcyYaNkJ1rASlEKN3SJFK4kUf2ZFDZAsqpaxARKf0nOzf9KuE9pokVL8YSsxYh7Qw6+LPOGeu2pBPak7uewsxJMqWyTXxOvOHFDsqFy1gBkpjhe71V7EcWofpQqCmv3wUrJnRXP5Wz9ceyRqGj2apbBubFDOOOfmueOKdoQIER2mLd9Bonv2EOOSkYuB+H77E/GKnb1MBrHMIN9HyKaatYFKuRfgIgqWRRtX3TAQ238FAZYRIy8oX++Wpbxn2WQBaM2I61ivkZiSC1T4H9v8E5rYRuf6vuTVZvwQoDAisAbas/HpOWOktNL9MXQ/b8+6ZhoJHXfJMXHSAauJqAdylO6qDcC6PkyVnkHw7utf/gZJdylxgRRxUug5wvhJWWo23yJsl99pQxITejsbZVbEbCGNNraNA7lxD6SWHp2kg=
