@@ -24,7 +24,7 @@ public class Main {
         });
 
         get("/", (request, response) -> {
-            return "<h1>uutiset</h1>"+
+            return "<h1>Hacker news -uutiset</h1>"+
             "<a href='suosituin'>suosituin</a> <br>"+
             "<a href='viimeisin'>viimeisin</a>";
         });
