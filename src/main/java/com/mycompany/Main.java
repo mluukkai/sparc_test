@@ -9,8 +9,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 // lsof -i :4567
 // mvn exec:java -Dexec.mainClass=com.mycompany.Main
-
 public class Main {
+
     public static void main(String[] args) {
 
         port(getHerokuAssignedPort());
@@ -24,19 +24,23 @@ public class Main {
         });
 
         get("/", (request, response) -> {
-            return "<h1>Hacker news -uutiset</h1>"+
-            "<a href='suosituin'>suosituin</a> <br>"+
-            "<a href='viimeisin'>viimeisin</a>";
+            return "<h1>Hackernews-uutiset</h1>"
+                    + "<a href='suosituin'>suosituin</a> <br>"
+                    + "<a href='viimeisin'>viimeisin</a>";
         });
 
         get("viimeisin", (request, response) -> {
             HackerPaivanUutiset hakija = new HackerPaivanUutiset();
-            return hakija.haeViimeisinUutinen();
+            String[] parts = new NewsParser(hakija.haeViimeisinUutinen()).parse();
+
+            return htmlFor("Viimeisin", parts);
         });
 
         get("suosituin", (request, response) -> {
             HackerPaivanUutiset hakija = new HackerPaivanUutiset();
-            return hakija.haeSuosituinUutinen();
+            String[] parts = new NewsParser(hakija.haeViimeisinUutinen()).parse();
+
+            return htmlFor("Suosituin", parts);
         });
 
         get("/hello", (request, response) -> {
@@ -46,6 +50,15 @@ public class Main {
 
             return new ModelAndView(model, "hello.mustache.html");
         }, new MustacheTemplateEngine());
+
+    }
+
+    static String htmlFor(String header, String[] parts) {
+        return "<h1>"+header+" uutinen</h1>"
+                + "<p><em>" + parts[0] + "</em></p>"
+                + "<a href='" + parts[1] + "'>"+parts[1]+"</a>"
+                + "<br><br>"
+                + "<a href='..'>takaisin</<a>";
 
     }
 
