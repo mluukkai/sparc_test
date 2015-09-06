@@ -20,7 +20,7 @@ public class Main {
         });
 
         get("/hei/:name", (request, response) -> {
-            return "heippa " + request.params(":name");
+            return "hei " + request.params(":name");
         });
 
         get("/", (request, response) -> {
