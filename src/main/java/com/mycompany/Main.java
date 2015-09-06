@@ -15,14 +15,6 @@ public class Main {
 
         port(getHerokuAssignedPort());
 
-        get("/hello2", (request, response) -> {
-            return "Hello World2";
-        });
-
-        get("/hei/:name", (request, response) -> {
-            return "hei " + request.params(":name");
-        });
-
         get("/", (request, response) -> {
             return "<h1>Hackernews-uutiset</h1>"
                     + "<a href='suosituin'>suosituin</a> <br>"
