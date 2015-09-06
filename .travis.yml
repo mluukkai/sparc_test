@@ -1,0 +1,10 @@
+language: java
+
+before_install:
+  - git clone https://github.com/hy-ohtu/PaivanUutiset
+  - mvn clean install -U -Dmaven.test.skip=true -f PaivanUutiset/pom.xml
+  - git clone https://github.com/hy-ohtu/HackerNewsUutiset.git
+  - mvn clean install -U -Dmaven.test.skip=true -f HackerNewsUutiset/pom.xml
+
+after_success:
+  - mvn heroku:deploy

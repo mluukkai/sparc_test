@@ -1,5 +1,6 @@
 package com.mycompany;
 
+import com.mycompany.hackernewsuutiset.HackerPaivanUutiset;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -11,9 +12,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class Main {
     public static void main(String[] args) {
-        port(getHerokuAssignedPort());
 
-        get("/hello", (req, res) -> "Hello World2");
+        port(getHerokuAssignedPort());
 
         get("/hello2", (request, response) -> {
             return "Hello World2";
@@ -24,14 +24,22 @@ public class Main {
         });
 
         get("/", (request, response) -> {
-            return "<h1>lol</h1>";
+            return "<h1>uutiset</h1>"+
+            "<a href='suosituin'>suosituin</a> <br>"+
+            "<a href='viimeisin'>viimeisin</a>";
         });
 
-        Map map = new HashMap();
-        map.put("name", "Foobar");
-        get("/moi", (rq, rs) -> new ModelAndView(map, "hello.mustache"), new MustacheTemplateEngine());
+        get("viimeisin", (request, response) -> {
+            HackerPaivanUutiset hakija = new HackerPaivanUutiset();
+            return hakija.haeViimeisinUutinen();
+        });
 
-        get("/moido", (request, response) -> {
+        get("suosituin", (request, response) -> {
+            HackerPaivanUutiset hakija = new HackerPaivanUutiset();
+            return hakija.haeSuosituinUutinen();
+        });
+
+        get("/hello", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("name", "Lol");
             //model.put("person", new Person("Foobar"));
@@ -46,6 +54,6 @@ public class Main {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 4567;
     }
 }
