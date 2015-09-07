@@ -25,15 +25,15 @@ public class Main {
         }, new VelocityTemplateEngine());             
         
         get("viimeisin", (request, response) -> {
-            NewsItem news = new NewsParser(hackerNews().haeViimeisinUutinen()).parse();
+            NewsItem lastNews = new NewsParser(hackerNews().haeViimeisinUutinen()).parse();
             
-            return new ModelAndView(newsModel("Viimeisin", news), LAYOUT);
+            return render("Viimeisin", lastNews);
         },  new VelocityTemplateEngine());
         
         get("suosituin", (request, response) -> {
-            NewsItem news = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();
+            NewsItem mostPopularNews = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();
             
-            return new ModelAndView(newsModel("Suosituin", news), LAYOUT);
+            return render("Suosituin", mostPopularNews);
         }, new VelocityTemplateEngine());
         
     }
