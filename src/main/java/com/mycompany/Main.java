@@ -1,6 +1,7 @@
 package com.mycompany;
 
 import com.mycompany.hackernewsuutiset.HackerPaivanUutiset;
+import com.mycompany.paivanuutiset.PaivanUutiset;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -10,7 +11,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 // lsof -i :4567
 // mvn exec:java -Dexec.mainClass=com.mycompany.Main
 public class Main {
-
+    
     public static void main(String[] args) {
 
         port(getHerokuAssignedPort());
@@ -22,20 +23,18 @@ public class Main {
         });
 
         get("viimeisin", (request, response) -> {
-            HackerPaivanUutiset hakija = new HackerPaivanUutiset();
-            String[] parts = new NewsParser(hakija.haeViimeisinUutinen()).parse();
+            NewsItem news = new NewsParser(hackerNews().haeViimeisinUutinen()).parse();
 
-            return htmlFor("Viimeisin", parts);
+            return htmlFor("Viimeisin", news);
         });
 
         get("suosituin", (request, response) -> {
-            HackerPaivanUutiset hakija = new HackerPaivanUutiset();
-            String[] parts = new NewsParser(hakija.haeViimeisinUutinen()).parse();
+            NewsItem news = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();
 
-            return htmlFor("Suosituin", parts);
+            return htmlFor("Suosituin", news);
         });
 
-        get("/hello", (request, response) -> {
+        get("hello", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("name", "Lol");
             //model.put("person", new Person("Foobar"));
@@ -44,14 +43,23 @@ public class Main {
         }, new MustacheTemplateEngine());
 
     }
-
-    static String htmlFor(String header, String[] parts) {
+    
+    static PaivanUutiset uutisHakija = new HackerPaivanUutiset();
+    
+    static void setUutishakija(PaivanUutiset hakija){
+        uutisHakija = hakija;
+    }
+    
+    static PaivanUutiset hackerNews(){
+        return uutisHakija;
+    }
+    
+    static String htmlFor(String header, NewsItem news) {
         return "<h1>"+header+" uutinen</h1>"
-                + "<p><em>" + parts[0] + "</em></p>"
-                + "<a href='" + parts[1] + "'>"+parts[1]+"</a>"
+                + "<p><em>" + news.body + "</em></p>"
+                + "<a href='" + news.url + "'>"+news.url +"</a>"
                 + "<br><br>"
                 + "<a href='..'>takaisin</<a>";
-
     }
 
     static int getHerokuAssignedPort() {

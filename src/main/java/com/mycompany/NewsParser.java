@@ -7,13 +7,10 @@ public class NewsParser {
         this.news = news;
     }
     
-    public String[] parse(){
-        String[] parts = new String[2];
-        
+    public NewsItem parse(){  
         String[] splitted = news.split(", url: ");
-        parts[0] = splitted[0].replaceAll("Suosituin uutinen on ", "").replaceAll("Viimeisin uutinen on ", "");
-        parts[1] = splitted[1];
+        String body = splitted[0].replaceAll("Suosituin uutinen on ", "").replaceAll("Viimeisin uutinen on ", "");
         
-        return parts;
+        return new NewsItem(body, splitted[1]);
     }
 }
