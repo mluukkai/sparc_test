@@ -17,5 +17,4 @@ public class NewsItem {
         return url;
     }
     
-    
 }
