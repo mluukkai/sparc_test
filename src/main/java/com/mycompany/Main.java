@@ -17,8 +17,7 @@ public class Main {
         
         port(getHerokuAssignedPort());
 
-        get("/hello", (req, res) -> "Hello World");
-        
+
         get("/", (request, response) -> {
             return new ModelAndView(new HashMap<>(), "templates/index.html");
         }, new VelocityTemplateEngine());       
@@ -32,8 +31,8 @@ public class Main {
         get("suosituin", (request, response) -> {
             NewsItem news = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();
             
-            return new ModelAndView(newsModel("Suosituin", news), "news.html");
-        }, new MustacheTemplateEngine());
+            return new ModelAndView(newsModel("Suosituin", news), "templates/news.html");
+        }, new VelocityTemplateEngine());
         
     }
        
