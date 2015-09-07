@@ -16,6 +16,8 @@ public class Main {
         
         port(getHerokuAssignedPort());
 
+        get("/hello", (req, res) -> "Hello World");
+        
         get("/", (request, response) -> {
             return new ModelAndView(new HashMap<>(), "index.html");
         }, new MustacheTemplateEngine());       
