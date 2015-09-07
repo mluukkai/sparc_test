@@ -19,7 +19,7 @@ public class NewsParserTestTest {
     
     @Test 
     public void viimeisin(){ 
-    String news = "Viimeisin uutinen on How Insurance Companies Profit from “Wearables” by cybernot, url: https://www.sherbit.io/the-insurance-industry-and-the-quantified-self/";
+        String news = "Viimeisin uutinen on How Insurance Companies Profit from “Wearables” by cybernot, url: https://www.sherbit.io/the-insurance-industry-and-the-quantified-self/";
         NewsParser p = new NewsParser(news);
         NewsItem newsItem = p.parse();
         assertEquals("How Insurance Companies Profit from “Wearables” by cybernot", newsItem.body);

@@ -19,13 +19,27 @@ public class IntegrationTest extends FluentTest {
     public static ServerRule server = new ServerRule(4567);
 
     @Test
-    public void helloTest() {
+    public void mainPage() {
         goTo("http://localhost:4567/");
         assertThat(pageSource()).contains("Hackernews-uutiset");
         assertThat(pageSource()).contains("viimeisin");
         assertThat(pageSource()).contains("suosituin");
     }
 
+    @Test
+    public void mostPopularNews() {
+        goTo("http://localhost:4567/suosituin");
+        assertThat(pageSource()).contains("Suosituin uutinen");
+        assertThat(pageSource()).contains("Alda: A music programming language by daveyarwood");
+    }
+
+    @Test
+    public void mostRecentNews() {
+        goTo("http://localhost:4567/viimeisin");
+        assertThat(pageSource()).contains("Viimeisin uutinen");
+        assertThat(pageSource()).contains("How Insurance Companies Profit from “Wearables” by cybernot");
+    }    
+    
     @Override
     public WebDriver getDefaultDriver() {
         return webDriver;
