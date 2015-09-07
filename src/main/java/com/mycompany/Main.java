@@ -7,6 +7,7 @@ import java.util.Map;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
+import spark.template.velocity.VelocityTemplateEngine;
 
 // lsof -i :4567
 // mvn exec:java -Dexec.mainClass=com.mycompany.Main
@@ -19,14 +20,14 @@ public class Main {
         get("/hello", (req, res) -> "Hello World");
         
         get("/", (request, response) -> {
-            return new ModelAndView(new HashMap<>(), "index.html");
-        }, new MustacheTemplateEngine());       
+            return new ModelAndView(new HashMap<>(), "templates/index.html");
+        }, new VelocityTemplateEngine());       
         
         get("viimeisin", (request, response) -> {
             NewsItem news = new NewsParser(hackerNews().haeViimeisinUutinen()).parse();
             
-            return new ModelAndView(newsModel("Viimeisin", news), "news.html");
-        }, new MustacheTemplateEngine());
+            return new ModelAndView(newsModel("Viimeisin", news), "templates/news.html");
+        },  new VelocityTemplateEngine());
         
         get("suosituin", (request, response) -> {
             NewsItem news = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();

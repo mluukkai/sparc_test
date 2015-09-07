@@ -8,4 +8,14 @@ public class NewsItem {
         this.body = body;
         this.url = url;
     }
+
+    public String body() {
+        return body;
+    }
+
+    public String url() {
+        return url;
+    }
+    
+    
 }
