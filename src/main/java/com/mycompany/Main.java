@@ -13,35 +13,32 @@ import spark.template.mustache.MustacheTemplateEngine;
 public class Main {
     
     public static void main(String[] args) {
-
+        
         port(getHerokuAssignedPort());
 
         get("/", (request, response) -> {
-            return "<h1>Hackernews-uutiset</h1>"
-                    + "<a href='suosituin'>suosituin</a> <br>"
-                    + "<a href='viimeisin'>viimeisin</a>";
-        });
-
+            return new ModelAndView(new HashMap<>(), "index.html");
+        }, new MustacheTemplateEngine());       
+        
         get("viimeisin", (request, response) -> {
             NewsItem news = new NewsParser(hackerNews().haeViimeisinUutinen()).parse();
-
-            return htmlFor("Viimeisin", news);
-        });
-
+            
+            return new ModelAndView(newsModel("Viimeisin", news), "news.html");
+        }, new MustacheTemplateEngine());
+        
         get("suosituin", (request, response) -> {
             NewsItem news = new NewsParser(hackerNews().haeSuosituinUutinen()).parse();
-
-            return htmlFor("Suosituin", news);
-        });
-
-        get("hello", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("name", "Lol");
-            //model.put("person", new Person("Foobar"));
-
-            return new ModelAndView(model, "hello.mustache.html");
+            
+            return new ModelAndView(newsModel("Suosituin", news), "news.html");
         }, new MustacheTemplateEngine());
-
+        
+    }
+       
+    static Map<String, Object> newsModel(String type, NewsItem news) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("news", news);
+        model.put("type", type);
+        return model;
     }
     
     static PaivanUutiset uutisHakija = new HackerPaivanUutiset();
@@ -54,14 +51,6 @@ public class Main {
         return uutisHakija;
     }
     
-    static String htmlFor(String header, NewsItem news) {
-        return "<h1>"+header+" uutinen</h1>"
-                + "<p><em>" + news.body + "</em></p>"
-                + "<a href='" + news.url + "'>"+news.url +"</a>"
-                + "<br><br>"
-                + "<a href='..'>takaisin</<a>";
-    }
-
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
