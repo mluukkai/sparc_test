@@ -54,10 +54,16 @@ public class Main {
     }
     
     static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        if ( portFromEnv!=null ) {
+            return Integer.parseInt(portFromEnv);
         }
+        
         return 4567;
+    }
+    
+    static String portFromEnv = new ProcessBuilder().environment().get("PORT");
+    
+    static void setEnvPort(String port){
+        portFromEnv = port;
     }
 }

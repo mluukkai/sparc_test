@@ -38,7 +38,7 @@ public class IntegrationTest extends FluentTest {
         goTo("http://localhost:4567/viimeisin");
         assertThat(pageSource()).contains("Viimeisin uutinen");
         assertThat(pageSource()).contains("How Insurance Companies Profit from “Wearables” by cybernot");
-    }    
+    }     
     
     @Override
     public WebDriver getDefaultDriver() {
